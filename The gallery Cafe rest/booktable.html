@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="booktable.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br>   
+    </div>
+    <br>
+    <h1>Reservation Process</h1>
+    <br><br>
+    <div class="options-container">
+        <a href="#" class="option" id="reserve-button">
+            <img src="CHOICES/table.jpeg" alt="Option 1">
+            <div class="option-text">Reserve Process</div>
+        </a>
+    </div>
+    <a href="reservation.html" class="back-button">Back</a>
+
+    <!-- Popup form -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close-btn" id="close-popup">&times;</span>
+            <h2>Reserve Table</h2>
+            <form id="reservation-form">
+                <input type="text" id="table-id" placeholder="Table ID" required>
+                <input type="text" id="customer-name" placeholder="Customer Name" required>
+                <input type="text" id="mobile-number" placeholder="Mobile Number" required>
+                <input type="hidden" id="action" value="reserve">
+                <div id="popup-message"></div>
+                <button type="submit" id="reserve-action" class="reserve">Reserve</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const reserveButton = document.getElementById('reserve-button');
+    const popup = document.getElementById('popup');
+    const form = document.getElementById('reservation-form');
+    const popupMessage = document.getElementById('popup-message');
+    const closeButton = document.getElementById('close-popup');
+
+    // Open popup on reserve button click
+    reserveButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        popup.style.display = 'flex';
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const tableId = document.getElementById('table-id').value;
+        const customerName = document.getElementById('customer-name').value;
+        const mobileNumber = document.getElementById('mobile-number').value;
+        const action = document.getElementById('action').value;
+
+        try {
+            const response = await fetch('server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    table_id: tableId,
+                    customer_name: customerName,
+                    mobile_number: mobileNumber,
+                    action: action
+                })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                popupMessage.textContent = 'Reservation successful!';
+                popupMessage.style.color = 'green';
+                form.reset(); // Reset form fields after successful submission
+            } else {
+                popupMessage.textContent = 'Reservation failed: ' + result.message;
+                popupMessage.style.color = 'red';
+            }
+        } catch (error) {
+            popupMessage.textContent = 'An error occurred: ' + error.message;
+            popupMessage.style.color = 'red';
+        }
+    });
+
+    // Close popup on close button click
+    closeButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+});
+
+    </script>
+</body>
+</html>

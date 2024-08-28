@@ -1,0 +1,232 @@
+/* styles.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    background-color: black;
+}
+
+.header {
+    position: relative;
+    text-align: center;
+    color: white;
+    background-color: black; /* Black background */
+    height: 250px;
+    padding-top: 50px;
+    overflow: hidden; /* Ensures video does not overflow */
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Behind the text */
+    overflow: hidden;
+}
+
+.background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Black overlay with transparency */
+    backdrop-filter: blur(0px); /* Blur effect */
+    z-index: 2; /* Above the video, but below the text */
+}
+
+h1 {
+    font-size: 70px;
+    margin: 0;
+    position: relative; /* Ensure text is above overlay */
+    z-index: 3;
+    text-shadow: 
+    0 0 5px rgba(255, 255, 0, 0.7), /* Yellow outer glow */
+    0 0 10px rgba(255, 255, 0, 0.5), /* Larger yellow glow */
+    0 0 15px rgba(255, 255, 0, 0.3); /* Even larger yellow glow */
+}
+
+h3 {
+    text-align: center;
+    font-size: 40px;
+    margin: 0;
+    position: relative; /* Ensure text is above overlay */
+    z-index: 3;
+    text-shadow: 
+    0 0 5px rgb(123, 255, 0), /* Yellow outer glow */
+    0 0 10px rgb(0, 255, 47), /* Larger yellow glow */
+    0 0 15px rgb(102, 255, 0); /* Even larger yellow glow */
+    
+}
+
+.nav-buttons {
+    position: absolute;
+    bottom: 10px; /* Position buttons near the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Center buttons horizontally */
+    display: flex;
+    gap: 60px; /* Space between buttons */
+    z-index: 3; /* Ensure buttons are above the overlay */
+}
+
+.nav-button {
+    background-color: rgba(37, 37, 31, 0.8); /* Yellow background */
+    color: white;
+    padding: 1px 10px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(238, 238, 6); /* Yellow shadow for glowing effect */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    
+}   
+
+.nav-button:hover {
+    background-color: rgb(30, 235, 235); /* Brighter yellow on hover */
+    box-shadow: 0 0 10px rgb(255, 251, 2); /* More intense glow on hover */
+}
+
+/* Styling for the clickable options */
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the options */
+    gap: 80px; /* Space between options */
+    padding: 20px;
+}
+
+.option {
+    position: relative;
+    display: block;
+    width: 200px; /* Width of each option */
+    height: 200px; /* Height of each option */
+    overflow: hidden; /* Hide overflow of images */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for effect */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.option-text {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    color: white; /* Text color */
+    font-size: 18px; /* Font size */
+    background: rgba(0, 0, 0, 0.6); /* Background with transparency */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.option:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* More intense shadow on hover */
+}
+
+.option:hover .option-text {
+    background: rgba(0, 0, 0, 0.8); /* Darker background on hover */
+}
+h1{
+    text-align: center;
+}
+h2{
+    -webkit-text-fill-color: #ff0101;
+    text-align: center;
+}
+/* Back Button Styles */
+.back-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #012cff; /* Button color */
+    color: white; /* Text color */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.back-button:hover {
+    background-color: #000000; /* Darker button color on hover */
+}
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001; /* Higher z-index to overlay above everything */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5); /* Semi-transparent background */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px; /* Optional: limit modal width */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+

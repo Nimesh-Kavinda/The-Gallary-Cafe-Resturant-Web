@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="addevent.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        
+        <br><br>
+        <br>
+    </div>
+    <br><br>
+    <div class="options-container">
+        <a href="#" id="show-add-event" class="option">
+            <img src="CHOICES/events.jpeg" alt="Option 1">
+            <div class="option-text">Add Event</div>
+        </a>
+        <br>
+        <a href="admin.html" class="back-button">Back</a>
+    </div>
+
+    <!-- Popup for adding an event -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <button class="close-btn" id="close-btn">Close</button>
+            <h2>Add Event</h2>
+            <label for="event-id">Event ID:</label>
+            <input type="text" id="event-id" placeholder="Event ID">
+            <label for="description">Description:</label>
+            <input type="text" id="description" placeholder="Description">
+            <button id="add-btn">Add</button>
+            <div id="message" style="margin-top: 10px;"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Show popup when "Add Event" is clicked
+    document.getElementById('show-add-event').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('popup').style.display = 'flex'; // Show popup
+    });
+
+    // Close popup when "Close" button is clicked
+    document.getElementById('close-btn').addEventListener('click', function() {
+        document.getElementById('popup').style.display = 'none'; // Hide popup
+    });
+
+    // Handle the addition of the event
+    document.getElementById('add-btn').addEventListener('click', function() {
+        const eventId = document.getElementById('event-id').value;
+        const description = document.getElementById('description').value;
+
+        if (!eventId || !description) {
+            alert('Please fill out all fields.');
+            return;
+        }
+
+        fetch('add_event.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'event_id': eventId,
+                'description': description
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const messageDiv = document.getElementById('message');
+            if (data.status === 'success') {
+                messageDiv.textContent = data.message;
+                messageDiv.style.color = 'green';
+                document.getElementById('event-id').value = '';
+                document.getElementById('description').value = '';
+            } else {
+                messageDiv.textContent = data.message;
+                messageDiv.style.color = 'red';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = 'An error occurred. Please try again.';
+            messageDiv.style.color = 'red';
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

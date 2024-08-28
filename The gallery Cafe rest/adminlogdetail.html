@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="admindetail.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background new.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br><br>
+    </div> 
+    <br><br>
+    <h1>Admin loging</h1>
+    <!-- Clickable Options with Images -->
+    <div class="options-container">
+        <a href="#" class="option" id="loginBtn">
+            <img src="CHOICES/user.png" alt="Option 1">
+            <div class="option-text">Enter Your Password</div>
+        </a>
+    </div>
+    <a href="index.html" class="back-button">Back</a>
+    
+    <!-- Popup for login -->
+    <div id="loginPopup" class="popup">
+        <div class="popup-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+            <p id="errorMsg" style="color: red; display: none;">Incorrect username or password.</p>
+        </div>
+    </div>
+
+    <script>
+        // script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const loginBtn = document.getElementById('loginBtn');
+    const loginPopup = document.getElementById('loginPopup');
+    const closePopup = document.getElementById('closePopup');
+    const loginForm = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    
+    // Show the popup when login button is clicked
+    loginBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        loginPopup.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling while popup is open
+    });
+    
+    // Close the popup when the close button is clicked
+    closePopup.addEventListener('click', () => {
+        loginPopup.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Allow scrolling when popup is closed
+    });
+    
+    // Handle the form submission
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        const formData = new FormData(loginForm);
+        
+        fetch('login.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = 'admin.html'; // Redirect to admin page
+            } else {
+                errorMsg.textContent = data.message; // Show error message
+                errorMsg.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            errorMsg.textContent = 'An error occurred. Please try again.';
+            errorMsg.style.display = 'block';
+        });
+    });
+});
+
+        </script>
+</body>
+</html>

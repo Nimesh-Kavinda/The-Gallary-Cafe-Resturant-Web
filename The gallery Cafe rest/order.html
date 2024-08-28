@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="order.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br>    
+    </div>
+    <br>
+    <div class="options-container">
+        <a href="#" id="make-order" class="option">
+            <img src="CHOICES/preorder.png" alt="Option 1">
+            <div class="option-text">Make Order</div>
+        </a> 
+    </div>
+    <br><br>
+    <br>
+    <a href="custormer.html" class="back-button">Back</a>     
+
+    <!-- Popup Form -->
+    <div id="order-popup" class="popup">
+        <div class="popup-content">
+            <span id="close-popup" class="close-button">&times;</span>
+            <h2>Place Your Order</h2>
+            <form id="order-form">
+                <label for="item-id">Meal Item ID:</label>
+                <input type="text" id="item-id" name="item-id" required><br><br>
+                
+                <label for="customer-name">Customer Name:</label>
+                <input type="text" id="customer-name" name="customer-name" required><br><br>
+                
+                <label for="mobile-number">Mobile Number:</label>
+                <input type="text" id="mobile-number" name="mobile-number" required><br><br>
+                
+                <button type="submit">Order</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const makeOrderButton = document.getElementById('make-order');
+    const orderPopup = document.getElementById('order-popup');
+    const closePopupButton = document.getElementById('close-popup');
+    const orderForm = document.getElementById('order-form');
+    
+    // Show popup
+    makeOrderButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        orderPopup.style.display = 'flex';
+        document.body.classList.add('blur'); // Optional: Add a blur effect to the body
+    });
+
+    // Close popup
+    closePopupButton.addEventListener('click', () => {
+        orderPopup.style.display = 'none';
+        document.body.classList.remove('blur'); // Optional: Remove blur effect
+    });
+
+    // Handle form submission
+    orderForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        const ItemId = document.getElementById('item-id').value;
+        const customerName = document.getElementById('customer-name').value;
+        const mobileNumber = document.getElementById('mobile-number').value;
+
+        try {
+            const response = await fetch('submit_order.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    item_id: ItemId,
+                    customer_name: customerName,
+                    mobile_number: mobileNumber
+                })
+            });
+            const result = await response.json();
+            if (result.success) {
+                alert('Order placed successfully!');
+                orderPopup.style.display = 'none';
+                document.body.classList.remove('blur');
+                orderForm.reset(); // Clear the form
+            } else {
+                alert('Failed to place order: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error submitting order:', error);
+            alert('Error submitting order. Please try again.');
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

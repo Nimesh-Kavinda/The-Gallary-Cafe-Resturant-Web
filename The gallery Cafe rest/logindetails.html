@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Café Restaurant</title>
+    <link rel="stylesheet" href="loginacces.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>The Gallery Café Restaurant</h1>
+        <br><br>
+        <br>
+        
+    </div> 
+    <br><br>
+    <h1>Enjoy! Warmly Welcome For the Customers.<br><br>(Join with us)</h1>
+        <br>
+        <div class="options-container">
+            <a href="#" class="option" id="open-popup">
+                <img src="CHOICES/user.png" alt="Option 1">
+                <div class="option-text">Enter Your loging details</div>
+            </a>
+        </div>
+        
+        <a href="index.html" class="back-button">Back</a>
+         <!-- Popup HTML -->
+    <div id="login-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" id="close-popup">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="username">Username:</label>
+                <input type="text" id="user_name" name="username" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" id="user_password" name="password" required>
+                <br><br>
+                <button type="submit">Login</button>
+                <button type="button" id="reset-form">Reset</button>
+            </form>
+            <div id="error-message" class="error-message"></div>
+        </div>
+    </div>
+    </div>
+        <script> 
+        document.addEventListener('DOMContentLoaded', function () {
+    const popup = document.getElementById('login-popup');
+    const openPopupBtn = document.getElementById('open-popup');
+    const closePopupBtn = document.getElementById('close-popup');
+    const loginForm = document.getElementById('login-form');
+    const resetFormBtn = document.getElementById('reset-form');
+    const errorMessage = document.getElementById('error-message');
+    const body = document.body;
+    
+    // Show the popup
+    openPopupBtn.addEventListener('click', function () {
+        popup.style.display = 'block';
+        body.classList.add('blur'); // Add blur class to body
+    });
+
+    // Close the popup
+    closePopupBtn.addEventListener('click', function () {
+        popup.style.display = 'none';
+        body.classList.remove('blur'); // Remove blur class from body
+    });
+
+    // Form submission
+    loginForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent form submission
+
+        const user_name = document.getElementById('user_name').value;
+        const user_password = document.getElementById('user_password').value;
+
+        // AJAX request to validate login
+        fetch('validate_login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'username': user_name,
+                'password': user_password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = 'custormer.html';
+            } else {
+                errorMessage.textContent = 'Invalid username or password.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            errorMessage.textContent = 'An error occurred. Please try again.';
+        });
+    });
+
+    // Reset form fields
+    resetFormBtn.addEventListener('click', function () {
+        document.getElementById('user_name').value = '';
+        document.getElementById('user_password').value = '';
+        errorMessage.textContent = '';
+    });
+});    
+      
+
+        </script>
+        
+</body>
+</html>

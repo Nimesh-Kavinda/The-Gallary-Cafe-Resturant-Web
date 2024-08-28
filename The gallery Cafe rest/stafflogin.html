@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="Logingprocess.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background new.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br><br>
+    </div> 
+    <br><br>
+    <h3>Loging process</h3>
+    <br>
+    <!-- Clickable Options with Images -->
+    <div class="options-container">
+        <a href="#" class="option" id="login-option">
+            <img src="CHOICES/addstaff.jpg" alt="Option 1">
+            <div class="option-text">Staff Loging</div>
+        </a>
+    </div>
+    <a href="index.html" class="back-button">Back</a>
+    
+    <!-- Login Popup -->
+    <div id="login-popup" class="popup">
+        <div class="popup-content">
+            <span class="close-button" id="close-popup">&times;</span>
+            <h3>Staff Login</h3>
+            <form id="login-form">
+                <label for="member-name">Member Name:</label>
+                <input type="text" id="member-name" name="member_name" required>
+                <br><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <br><br>
+                <button type="submit">Login</button>
+                <p id="login-error" style="color: red;"></p>
+            </form>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loginOption = document.getElementById('login-option');
+        const loginPopup = document.getElementById('login-popup');
+        const closePopup = document.getElementById('close-popup');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+    
+        loginOption.addEventListener('click', (event) => {
+            event.preventDefault();
+            loginPopup.style.display = 'flex';
+        });
+    
+        closePopup.addEventListener('click', () => {
+            loginPopup.style.display = 'none';
+        });
+    
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const memberName = document.getElementById('member-name').value;
+            const password = document.getElementById('password').value;
+    
+            const response = await fetch('loginstaff.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    member_name: memberName,
+                    password: password
+                })
+            });
+    
+            const result = await response.json();
+            
+            if (result.success) {
+                window.location.href = 'staff.html';
+            } else {
+                loginError.textContent = result.message;
+            }
+        });
+    });
+    </script>
+    
+</body>
+</html>

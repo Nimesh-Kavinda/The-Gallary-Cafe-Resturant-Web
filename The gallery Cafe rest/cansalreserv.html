@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="cansalreserv.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br>    
+    </div> 
+    <br><br>
+    <br>
+    <div class="options-container">
+        <a href="#" id="view-table-list" class="option">
+            <img src="CHOICES/reservation.jpg" alt="Option 1">
+            <div class="option-text">Cancel Reservation</div>
+        </a>
+    </div>
+    <a href="reservation.html" class="back-button">Back</a>
+
+    <!-- Popup form -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close-btn" id="close-popup">&times;</span>
+            <h2>Cancel Reservation</h2>
+            <form id="cancel-form">
+                <input type="text" id="table-id" placeholder="Table ID" required>
+                <div id="popup-message"></div>
+                <button type="submit" id="cancel-action" class="cancel">Cancel Reservation</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const viewTableListButton = document.getElementById('view-table-list');
+    const popup = document.getElementById('popup');
+    const closeButton = document.getElementById('close-popup');
+    const cancelForm = document.getElementById('cancel-form');
+    const popupMessage = document.getElementById('popup-message');
+
+    // Open popup on view-table-list button click
+    viewTableListButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        popup.style.display = 'flex';
+    });
+
+    // Close popup on close button click
+    closeButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Handle form submission
+    cancelForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const tableId = document.getElementById('table-id').value;
+
+        try {
+            const response = await fetch('cancel_reservation.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    table_id: tableId
+                })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                popupMessage.textContent = 'Reservation cancelled successfully!';
+                popupMessage.style.color = 'green';
+                cancelForm.reset(); // Reset form fields after successful submission
+            } else {
+                popupMessage.textContent = 'Cancellation failed: ' + result.message;
+                popupMessage.style.color = 'red';
+            }
+        } catch (error) {
+            popupMessage.textContent = 'An error occurred: ' + error.message;
+            popupMessage.style.color = 'red';
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

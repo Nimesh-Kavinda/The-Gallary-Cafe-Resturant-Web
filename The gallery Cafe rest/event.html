@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="event.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>The Gallery Café Restaurant</h1>
+        <br><br>
+    </div> 
+    <br>
+    <div class="options-container">
+        <a href="#" id="show-events" class="option">
+            <img src="CHOICES/events.jpeg" alt="Option 1">
+            <div class="option-text">Show Events</div>
+        </a>
+        <br><br>
+        <br>
+        <a href="custormer.html" class="back-button">Back</a>     
+    </div>
+
+    <!-- Popup Notification -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span id="close-popup" class="close-button">&times;</span>
+            <h2>Upcoming Special Events For You. Get Enjoyy!!!</h2>
+            <div id="events-table"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const showEventsButton = document.getElementById('show-events');
+    const popup = document.getElementById('popup');
+    const closePopupButton = document.getElementById('close-popup');
+    const eventsTableDiv = document.getElementById('events-table');
+    const header = document.querySelector('.header');
+    const optionsContainer = document.querySelector('.options-container');
+
+    showEventsButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        popup.style.display = 'flex';
+        header.classList.add('blur');
+        optionsContainer.classList.add('blur');
+        try {
+            const response = await fetch('fetch_events.php'); // URL of the server-side script
+            const data = await response.json();
+            displayEvents(data);
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            eventsTableDiv.innerHTML = 'Error loading events.';
+        }
+    });
+
+    closePopupButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+        header.classList.remove('blur');
+        optionsContainer.classList.remove('blur');
+    });
+
+    function displayEvents(events) {
+        let tableHtml = '<table border="1"><tr><th>Event ID</th><th>Description</th></tr>';
+        events.forEach(event => {
+            tableHtml += `<tr><td>${event.event_id}</td><td>${event.description}</td></tr>`;
+        });
+        tableHtml += '</table>';
+        eventsTableDiv.innerHTML = tableHtml;
+    }
+});
+
+    </script>
+</body>
+</html>

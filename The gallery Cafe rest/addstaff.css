@@ -1,0 +1,243 @@
+/* styles.css */
+
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    position: relative;
+    text-align: center;
+    color: white;
+    background-color: black;
+    height: 250px;
+    padding-top: 50px;
+    overflow: hidden;
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px); /* Blur effect */
+    z-index: 2;
+}
+
+h1 {
+    font-size: 60px; /* Adjusted font size for better visibility */
+    margin: 0;
+    position: relative;
+    z-index: 3;
+    text-shadow:
+        0 0 6px rgba(255, 255, 0, 0.8),
+        0 0 12px rgba(255, 255, 0, 0.6),
+        0 0 18px rgba(255, 255, 0, 0.4);
+    text-align: center;
+}
+
+h3 {
+    font-size: 32px; /* Adjusted font size */
+    margin: 0;
+    position: relative;
+    z-index: 3;
+    text-shadow:
+        0 0 6px rgba(255, 255, 255, 0.7),
+        0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+.nav-buttons {
+    position: absolute;
+    bottom: 20px; /* Increased spacing from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px; /* Reduced space between buttons */
+    z-index: 3;
+}
+
+.nav-button {
+    background-color: rgba(37, 37, 31, 0.8);
+    color: white;
+    padding: 8px 16px; /* Adjusted padding */
+    text-decoration: none;
+    font-size: 14px; /* Reduced font size */
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(255, 255, 0, 0.8);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.nav-button:hover {
+    background-color: rgb(30, 235, 235);
+    box-shadow: 0 0 12px rgba(255, 255, 0, 1);
+}
+
+/* Styling for the clickable options */
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Reduced space between options */
+    padding: 20px;
+}
+
+.option {
+    position: relative;
+    display: block;
+    width: 180px; /* Adjusted width */
+    height: 180px; /* Adjusted height */
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.option-text {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 20px);
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+.option:hover .option-text {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.back-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #050505;
+    color: white;
+    padding: 12px 24px; /* Adjusted padding */
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #000000;
+}
+
+/* addstaff.css */
+
+/* Blur effect for background */
+body.blur {
+    overflow: hidden;
+}
+
+body.blur::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    filter: blur(5px);
+    z-index: 999; /* Behind the popup */
+    pointer-events: none;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    z-index: 1001; /* Above the blurred background */
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.popup .close {
+    display: block;
+    text-align: right;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.popup form {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup form input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.popup form button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.popup form button:hover {
+    background-color: #45a049;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Below the popup but above other content */
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="showmeals.css">
+    
+</head>
+<body>
+    <div class="header" id="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br>
+    </div>
+    <br><br>
+    <br>
+    <!-- Clickable Options with Images -->
+    <div class="options-container">
+        <a href="#" class="option" id="show-meals">
+            <img src="CHOICES/addmeal.jpg" alt="Option 1">
+            <div class="option-text">Show meals</div>
+        </a>
+        
+        <a href="custormer.html" class="back-button">Back</a>          
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Meals</h2>
+            <table id="meals-table">
+                <thead>
+                    <tr>
+                        <th>Meal Name</th>
+                        <th>Meal Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Get modal element
+        var modal = document.getElementById("myModal");
+
+        // Get open modal button
+        var showMealsButton = document.getElementById("show-meals");
+
+        // Get close button
+        var span = document.getElementsByClassName("close")[0];
+
+        // Open the modal
+        showMealsButton.onclick = function() {
+            // Apply blur effect to page content
+            document.body.classList.add("blurred");
+            modal.style.display = "block";
+
+            // Fetch data from the server
+            fetch('fetch_meals.php')
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.querySelector('#meals-table tbody');
+                    tableBody.innerHTML = ''; // Clear previous data
+                    data.forEach(meal => {
+                        let row = `<tr>
+                            <td>${meal.meal_name}</td>
+                            <td>${meal.meal_type}</td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Close the modal
+        span.onclick = function() {
+            // Remove blur effect
+            document.body.classList.remove("blurred");
+            modal.style.display = "none";
+        }
+
+        // Close the modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                document.body.classList.remove("blurred");
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

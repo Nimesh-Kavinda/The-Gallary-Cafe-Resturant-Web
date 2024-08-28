@@ -1,0 +1,297 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    height: 100%;
+    overflow: auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Styles */
+.header {
+    position: relative;
+    text-align: center;
+    color: white;
+    background-color: black; /* Black background */
+    height: 250px;
+    padding-top: 50px;
+    overflow: hidden; /* Ensures content does not overflow */
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Black overlay with transparency */
+    backdrop-filter: blur(0px); /* Blur effect */
+    z-index: 2; /* Above the video, but below the text */
+}
+h1 {
+    font-size: 100px;
+    color: darkorange;
+    background-color: #111311;
+    margin: 0;
+    position: relative;
+    z-index: 3;
+    text-shadow:
+        0 0 5px rgb(10, 57, 9),
+        0 0 10px rgb(2, 2, 2),
+        0 0 15px rgb(0, 0, 0);
+    text-align: center;
+}
+
+/* Header Text Styles */
+h2 {
+    font-size: 70px;
+    margin: 0;
+    position: relative;
+    z-index: 3;
+    text-shadow:
+        0 0 5px rgba(255, 255, 0, 0.7), /* Yellow outer glow */
+        0 0 10px rgba(255, 255, 0, 0.5), /* Larger yellow glow */
+        0 0 15px rgba(255, 255, 0, 0.3); /* Even larger yellow glow */
+    text-align: center;
+}
+
+h3 {
+    font-size: 40px;
+    margin: 0;
+    position: relative;
+    z-index: 3;
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.8), /* Outer glow */
+        0 0 16px rgba(255, 255, 255, 0.6); /* Additional glow */
+}
+
+/* Navigation Buttons Styles */
+.nav-buttons {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 60px;
+    z-index: 3; /* Ensure buttons are above the overlay */
+}
+
+.nav-button {
+    background-color: rgba(37, 37, 31, 0.8); /* Dark background */
+    color: white;
+    padding: 5px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(238, 238, 6); /* Yellow shadow for glowing effect */
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.nav-button:hover {
+    background-color: rgb(30, 235, 235); /* Brighter color on hover */
+    box-shadow: 0 0 10px rgb(255, 251, 2); /* More intense glow on hover */
+}
+
+/* "Who We Are" Section */
+.who-we-are {
+    text-align: center;
+    padding: 40px;
+    background-color: #f4f4f4; /* Light background color for contrast */
+    color: #333; /* Dark text color for readability */
+    font-family: 'Georgia', serif; /* Elegant font */
+}
+
+.who-we-are h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333; /* Dark text color for the heading */
+}
+
+.who-we-are p {
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 800px; /* Limiting text width for readability */
+    margin: 0 auto;
+}
+
+/* Clickable Options Styles */
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the options */
+    gap: 80px; /* Space between options */
+    padding: 20px;
+}
+
+.option {
+    position: relative;
+    display: block;
+    width: 200px; /* Width of each option */
+    height: 200px; /* Height of each option */
+    overflow: hidden; /* Hide overflow of images */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow for effect */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.option-text {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+    color: white; /* Text color */
+    font-size: 18px; /* Font size */
+    background: rgba(0, 0, 0, 0.6); /* Background with transparency */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.option:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7); /* More intense shadow on hover */
+}
+
+.option:hover .option-text {
+    background: rgba(0, 0, 0, 0.8); /* Darker background on hover */
+}
+
+/* Back Button Styles */
+.back-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #012cff; /* Button color */
+    color: white; /* Text color */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.back-button:hover {
+    background-color: #000000; /* Darker button color on hover */
+}
+
+/* Popup Styles */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999; /* High z-index to ensure it appears above all content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for background blur effect */
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* Center popup vertically with some margin */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    z-index: 10000; /* Ensure popup is on top of everything */
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for better visibility */
+}
+
+.close-popup {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-popup:hover,
+.close-popup:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 20px; /* Space between elements */
+    background-color: #c9d9e9;
+    align-items: center; /* Center elements horizontally */
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%; /* Full width of the form container */
+    max-width: 400px; /* Limit max width for larger screens */
+    padding: 12px; /* Add padding inside input fields */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px; /* Increase font size for better readability */
+}
+
+button {
+    padding: 12px 24px; /* Increase padding for buttons */
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Error Message Styles */
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+/* Blur Effect for Background Content */
+.blur {
+    position: relative;
+}
+
+.blur::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    filter: blur(5px); /* Adjust blur amount as needed */
+    z-index: -1; /* Place it behind the original content */
+}

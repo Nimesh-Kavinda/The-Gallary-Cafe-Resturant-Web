@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="reservation.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br>   
+    </div>
+    <br><br>
+    <br>
+    <!-- Clickable Options with Images -->
+    <div class="options-container">
+        <a href="#" id="view-table-list" class="option">
+            <img src="CHOICES/reservation.jpg" alt="Option 1">
+            <div class="option-text">View Table List</div>
+        </a>
+        <a href="booktable.html" class="option">
+            <img src="CHOICES/table.jpeg" alt="Option 2">
+            <div class="option-text">To Reserve</div>
+        </a>
+        <a href="cansalreserv.html" class="option">
+            <img src="CHOICES/table.jpeg" alt="Option 2">
+            <div class="option-text">To Cansal reservation</div>
+        </a>
+    </div> 
+    <a href="custormer.html" class="back-button">Back</a>          
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Table List</h2>
+            <table id="table-list">
+                <thead>
+                    <tr>
+                        <th>Table ID</th>
+                        <th>Table Position</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+    const viewTableList = document.getElementById('view-table-list');
+    const popup = document.getElementById('popup');
+    const closeBtn = document.querySelector('.close-btn');
+    const tableListBody = document.querySelector('#table-list tbody');
+
+    viewTableList.addEventListener('click', (event) => {
+        event.preventDefault();
+        fetchTableList();
+        popup.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    });
+
+    closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+        document.body.style.overflow = ''; // Restore background scrolling
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === popup) {
+            popup.style.display = 'none';
+            document.body.style.overflow = ''; // Restore background scrolling
+        }
+    });
+
+    function fetchTableList() {
+        fetch('fetch_tables.php')
+            .then(response => response.json())
+            .then(data => {
+                tableListBody.innerHTML = '';
+                data.forEach(table => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${table.table_id}</td>
+                        <td>${table.table_position}</td>
+                    `;
+                    tableListBody.appendChild(row);
+                });
+            })
+         
+           .catch(error => console.error('Error fetching table list:', error));
+        
+    }
+});
+
+
+    </script>
+</body>
+</html>

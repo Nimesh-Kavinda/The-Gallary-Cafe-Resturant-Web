@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="menu.css">
+    
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>The Gallery Café Restaurant</h1>
+        <br><br>
+        <br>
+    </div>
+    <br><br>
+    <br>
+    <h3>This Is All For You Here We Have</h3>
+    <br>
+    <!-- Clickable Options with Images -->
+    <div class="options-container">
+        <a href="#" class="option" id="show-menu">
+            <img src="CHOICES/menu.jpg" alt="Option 1">
+            <div class="option-text">The Menu</div>
+        </a>
+        
+        <a href="promotions.html" class="option">
+            <img src="CHOICES\View300.jpg" alt="Option 2">
+            <div class="option-text">Promotions</div>
+        </a>
+        
+    </div>
+    
+    <a href="index.html" class="back-button">Back</a>
+
+    
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Menu Items</h2>
+            <table id="menu-table">
+                <thead>
+                    <tr>
+                        <th>Meal ID</th>
+                        <th>Meal Name</th>
+                        <th>Meal Type</th>
+                        <th>Price</th>
+                        <th>Item ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h2>"The Menu" included Sri 
+        Lankan, Chinese, Italian foods</h2>
+        <br><br>
+        <br>
+    <script>
+        // Get modal element
+        var modal = document.getElementById("myModal");
+
+        // Get open modal button
+        var showMenuButton = document.getElementById("show-menu");
+
+        // Get close button
+        var span = document.getElementsByClassName("close")[0];
+
+        // Open the modal
+        showMenuButton.onclick = function() {
+            // Apply blur effect to page content
+            document.body.classList.add("blurred");
+            modal.style.display = "block";
+
+            // Fetch data from the server
+            fetch('fetch_menu.php')
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.querySelector('#menu-table tbody');
+                    tableBody.innerHTML = ''; // Clear previous data
+                    data.forEach(item => {
+                        let row = `<tr>
+                            <td>${item.meal_id}</td>
+                            <td>${item.meal_name}</td>
+                            <td>${item.meal_type}</td>
+                            <td>${item.price}</td>
+                            <td>${item.mail_id}</td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Close the modal
+        span.onclick = function() {
+            // Remove blur effect
+            document.body.classList.remove("blurred");
+            modal.style.display = "none";
+        }
+
+        // Close the modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                document.body.classList.remove("blurred");
+                modal.style.display = "none";
+            }
+        }
+
+        
+    </script>
+</body>
+</html>

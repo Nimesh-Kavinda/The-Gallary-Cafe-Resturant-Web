@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery Cafe Restaurant</title>
+    <link rel="stylesheet" href="staff.css">
+</head>
+<body>
+    <div class="header">
+        <div class="video-container">
+            <video autoplay muted loop class="background-video">
+                <source src="background video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="overlay"></div>
+        </div>
+        <h1>Gallery cafe</h1>
+        <br><br>
+        <br>   
+    </div>
+    <br><br>
+    <br>
+    <!-- Clickable Options with Images -->
+    <div class="options-container">
+        <a href="#" id="show-orders" class="option">
+            <img src="CHOICES/order.png" alt="Option 1">
+            <div class="option-text">Show Orders</div>
+        </a>
+        <a href="tablereserved.html" class="option">
+            <img src="CHOICES/table.jpeg" alt="Option 2">
+            <div class="option-text">Table Reserved List</div>
+        </a>
+    </div> 
+    <a href="stafflogin.html" class="back-button">Back</a>          
+
+    <!-- Popup Notification -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span id="close-popup" class="close-button">&times;</span>
+            <h2>Orders</h2>
+            <div id="orders-table"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const showOrdersButton = document.getElementById('show-orders');
+    const popup = document.getElementById('popup');
+    const closePopupButton = document.getElementById('close-popup');
+    const ordersTableDiv = document.getElementById('orders-table');
+
+    // Show popup
+    showOrdersButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        popup.style.display = 'flex';
+        try {
+            const response = await fetch('fetch_orders.php'); // URL of the server-side script
+            const data = await response.json();
+            displayOrders(data);
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            ordersTableDiv.innerHTML = 'Error loading orders.';
+        }
+    });
+
+    // Close popup
+    closePopupButton.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    function displayOrders(orders) {
+        let tableHtml = '<table><tr><th>Order ID</th><th>Meal Item ID</th><th>Customer Name</th><th>Mobile Number</th></tr>';
+        orders.forEach(order => {
+            tableHtml += `<tr><td>${order.order_id}</td><td>${order.item_id}</td><td>${order.customer_name}</td><td>${order.mobile_number}</td></tr>`;
+        });
+        tableHtml += '</table>';
+        ordersTableDiv.innerHTML = tableHtml;
+    }
+});
+
+    </script>
+</body>
+</html>
